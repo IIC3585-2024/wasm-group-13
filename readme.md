@@ -1,0 +1,1 @@
+emcc lib/factorPrimo.c -o func/factorPrimo.js -s WASM=1 -s EXPORTED_FUNCTIONS=_prime_factors,_malloc,_free
