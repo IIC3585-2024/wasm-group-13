@@ -3,17 +3,17 @@
 #include <stdlib.h>
 
 // Función para calcular el máximo común divisor
-long long gcd(long long a, long long b) {
+long gcd(long a, long b) {
     while (b != 0) {
-        long long t = b;
+        long t = b;
         b = a % b;
         a = t;
     }
     return a;
 }
 
-// Función para imprimir y almacenar los factores primos de un número usando long long long long
-int prime_factors(long long n, long long *factors) {
+// Función para imprimir y almacenar los factores primos de un número usando long long
+int prime_factors(long n, long *factors) {
     int index = 0;
 
     // División por 2 para eliminar todos los factores pares
@@ -23,7 +23,7 @@ int prime_factors(long long n, long long *factors) {
     }
 
     // n debe ser impar en este punto, por lo que podemos omitir los números pares
-    for (long long i = 3; i <= sqrt(n); i += 2) {
+    for (long i = 3; i <= sqrt(n); i += 2) {
         // Mientras i divide n, añade i al array y divide n
         while (n % i == 0) {
             factors[index++] = i;
@@ -40,18 +40,18 @@ int prime_factors(long long n, long long *factors) {
 }
 
 int main() {
-    long long number = 7086221232; // Un ejemplo con un número grande
+    long number = 134; // Un ejemplo con un número grande
 
     // Estimación de tamaño para el array de factores
     int size = (int)sqrt(number) + 2;  // Aproximadamente la cantidad de factores posibles
-    long long *factors = (long long*) malloc(size * sizeof(long long));
-    printf("Factores primos de %lld: ", number);
+    long *factors = (long*) malloc(size * sizeof(long));
+    printf("Factores primos de %ld: ", number);
     int index = prime_factors(number, factors);
 
     // Imprimir los factores primos desde el array
     printf("Los factores primos son: ");
     for (int i = 0; i < index; i++) {
-        printf("%lld ", factors[i]);
+        printf("%ld ", factors[i]);
     }
 
     // Liberar la memoria asignada

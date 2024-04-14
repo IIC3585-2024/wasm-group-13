@@ -1,8 +1,28 @@
+function prime_factors(n) {
+  let index = 0;
+  const factors = [];
+
+  while (n % 2 === 0) {
+    factors[index++] = 2;
+    n = n / 2;
+  }
+  for (let i = 3; i <= Math.sqrt(n); i += 2) {
+    while (n % i === 0) {
+        factors[index++] = i;
+        n = n / i;
+    }
+  }
+  if (n > 2) {
+    factors[index++] = n;
+  }
+  return factors;
+}
+
 function generateFactorsByWasm() {
   // Get the input value and split it into an array of numbers
   const input = document.getElementById('arrayInput').value;
 
-  const numBytes = 8; // since long long is 8 bytes
+  const numBytes = 4; // since long long is 8 bytes
   const number = parseInt(input);
   console.log(`[JS] Array elements: ${number}`);
 
@@ -16,7 +36,7 @@ function generateFactorsByWasm() {
   let factors = [];
   for (let i = 0; i < index; i++) {
     // Read the BigInt from the heap
-    const factor = Module.HEAP32[(factorsPointer / 8) + i];
+    const factor = Module.HEAP32[(factorsPointer / 4) + i];
     factors.push(factor.toString()); // Convert BigInt to string for easy handling
   }
    // Free the allocated memory
@@ -25,5 +45,9 @@ function generateFactorsByWasm() {
   // Display the result in the HTML
   const resultDiv = document.getElementById('printArrayResult');
   resultDiv.textContent = `Array sum: ${factors.join(', ')}`;
+
+  const factors2 = prime_factors(number);
+  const resultDiv2 = document.getElementById('printArrayResult2');
+  resultDiv2.textContent = `Array sum: ${factors2.join(', ')}`;
 }
 
