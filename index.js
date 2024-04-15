@@ -18,9 +18,20 @@ function prime_factors(n) {
   return factors;
 }
 
-function generateFactorsByWasm() {
+function generateFactorsByJs(input) {
+
+  //const input = document.getElementById('arrayInput').value;
+  const number = input;
+  console.log(`[JS] Array elements: ${number}`);
+
+  const factors = prime_factors(number);
+
+  return factors;
+}
+
+function generateFactorsByWasm(input) {
   // Get the input value and split it into an array of numbers
-  const input = document.getElementById('arrayInput').value;
+  //const input = document.getElementById('arrayInput').value;
 
   const numBytes = 8; // since long long is 8 bytes
   const number = input;
@@ -41,13 +52,31 @@ function generateFactorsByWasm() {
   }
    // Free the allocated memory
    Module._free(factorsPointer);
+   
+   return factors;
+}
+
+document.getElementById('sumButton').addEventListener('click', function() {
+
+  const compDiv = document.getElementById('div-comparison');
+
+  compDiv.style.display = 'block';
+
+  const inputValue = document.getElementById('arrayInput').value;
+
+  const resultWasm = generateFactorsByWasm(inputValue);
+  const resultJs = generateFactorsByJs(inputValue);
 
   // Display the result in the HTML
   const resultDiv = document.getElementById('printArrayResult');
-  resultDiv.textContent = `Array sum: ${factors.join(', ')}`;
+  resultDiv.textContent = `${resultWasm.join(', ')}`;
 
-  const factors2 = prime_factors(number);
   const resultDiv2 = document.getElementById('printArrayResult2');
-  resultDiv2.textContent = `Array sum: ${factors2.join(', ')}`;
-}
+  resultDiv2.textContent = `${resultJs.join(', ')}`;
 
+});
+
+document.getElementById('HideCompareButton').addEventListener('click', function() {
+  const compDiv = document.getElementById('div-comparison');
+  compDiv.style.display = 'none';
+});

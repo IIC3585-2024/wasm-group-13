@@ -43,6 +43,35 @@ int prime_factors(long long n, long long *factors) {
     return index;
 }
 
+// Función para imprimir y almacenar los factores primos de un número usando long long
+int prime_factors_o3(long long n, long long *factors) {
+    int index = 0;
+
+    // División por 2 para eliminar todos los factores pares
+    while (n % 2 == 0) {
+        factors[index++] = 2;
+        n = n / 2;
+    }
+
+    // n debe ser impar en este punto, por lo que podemos omitir los números pares
+    for (long long i = 3; i <= sqrt(n); i += 2) {
+        // Mientras i divide n, añade i al array y divide n
+        while (n % i == 0) {
+            factors[index++] = i;
+            n = n / i;
+        }
+    }
+
+    // Este condicional es para un factor primo mayor que la raíz cuadrada de n
+    if (n > 2) {
+        factors[index++] = n;
+    }
+
+    return index;
+}
+
+
+
 int main() {
     // NO APLICABLE
     /*
