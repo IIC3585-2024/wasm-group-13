@@ -22,8 +22,8 @@ function generateFactorsByWasm() {
   // Get the input value and split it into an array of numbers
   const input = document.getElementById('arrayInput').value;
 
-  const numBytes = 4; // since long long is 8 bytes
-  const number = parseInt(input);
+  const numBytes = 8; // since long long is 8 bytes
+  const number = input;
   console.log(`[JS] Array elements: ${number}`);
 
   const size = Math.ceil(Math.sqrt(Number(number))) + 2;
@@ -36,7 +36,7 @@ function generateFactorsByWasm() {
   let factors = [];
   for (let i = 0; i < index; i++) {
     // Read the BigInt from the heap
-    const factor = Module.HEAP32[(factorsPointer / 4) + i];
+    const factor = Module.getValue(factorsPointer + i * numBytes, 'i64');
     factors.push(factor.toString()); // Convert BigInt to string for easy handling
   }
    // Free the allocated memory

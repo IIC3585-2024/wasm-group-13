@@ -13,7 +13,7 @@ long gcd(long a, long b) {
 }
 
 // Función para imprimir y almacenar los factores primos de un número usando long long
-int prime_factors(long n, long *factors) {
+int prime_factors(long long n, long long *factors) {
     int index = 0;
 
     // División por 2 para eliminar todos los factores pares
@@ -23,7 +23,7 @@ int prime_factors(long n, long *factors) {
     }
 
     // n debe ser impar en este punto, por lo que podemos omitir los números pares
-    for (long i = 3; i <= sqrt(n); i += 2) {
+    for (long long i = 3; i <= sqrt(n); i += 2) {
         // Mientras i divide n, añade i al array y divide n
         while (n % i == 0) {
             factors[index++] = i;
@@ -36,10 +36,16 @@ int prime_factors(long n, long *factors) {
         factors[index++] = n;
     }
 
+    for (long long i = 0; i < index; i++) {
+        printf("[C] factors[%lld] %lld \n", i, factors[i]);
+    }
+
     return index;
 }
 
 int main() {
+    // NO APLICABLE
+    /*
     long number = 134; // Un ejemplo con un número grande
 
     // Estimación de tamaño para el array de factores
@@ -56,5 +62,6 @@ int main() {
 
     // Liberar la memoria asignada
     free(factors);
+    */
     return 0;
 }
