@@ -3,9 +3,9 @@
 #include <stdlib.h>
 
 // Función para calcular el máximo común divisor
-long gcd(long a, long b) {
+long gcd(long long a, long long b) {
     while (b != 0) {
-        long t = b;
+        long long t = b;
         b = a % b;
         a = t;
     }
@@ -13,20 +13,27 @@ long gcd(long a, long b) {
 }
 
 // Función para imprimir y almacenar los factores primos de un número usando long long
-int prime_factors(long n, long *factors) {
+int prime_factors(const char* numberAsString, long long *factors) {
+
+    printf("[C] numberAsString: %s\n",numberAsString);
+    long long n = atoll(numberAsString);
+    printf("[C] Sizeof long long: %ld\n", sizeof(long long));
+    printf("[C] n: %lld\n", n);
     int index = 0;
 
     // División por 2 para eliminar todos los factores pares
     while (n % 2 == 0) {
         factors[index++] = 2;
+        printf("[C] 2\n");
         n = n / 2;
     }
 
     // n debe ser impar en este punto, por lo que podemos omitir los números pares
-    for (long i = 3; i <= sqrt(n); i += 2) {
+    for (long long i = 3; i <= sqrt(n); i += 2) {
         // Mientras i divide n, añade i al array y divide n
         while (n % i == 0) {
             factors[index++] = i;
+            printf("[C] %lld\n", i);
             n = n / i;
         }
     }
@@ -34,12 +41,22 @@ int prime_factors(long n, long *factors) {
     // Este condicional es para un factor primo mayor que la raíz cuadrada de n
     if (n > 2) {
         factors[index++] = n;
+        printf("[C] %lld\n", n);
+    }
+
+    for (long long i = 0; i < index; i++) {
+        printf("factors[%lld] %lld \n", i, factors[i]);
     }
 
     return index;
 }
 
 int main() {
+    long long a = 154;
+
+    //long long *factors = (long long*) malloc(100 * sizeof(long long));
+    //int index = prime_factors(a, factors);
+    /*
     long number = 134; // Un ejemplo con un número grande
 
     // Estimación de tamaño para el array de factores
@@ -56,5 +73,6 @@ int main() {
 
     // Liberar la memoria asignada
     free(factors);
+    */
     return 0;
 }
